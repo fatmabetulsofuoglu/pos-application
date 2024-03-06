@@ -1,5 +1,6 @@
 import { Categories } from "./components/categories/Categories";
 import Header from "./components/header/Header";
+import { Products } from "./components/products/Products";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
           <Categories></Categories>
         </div>
         <div className="products flex-[8]">
-          <div>products</div>
+          <Products/>
         </div>
         <div className="cart-totals">
           <div>cart totals</div>
