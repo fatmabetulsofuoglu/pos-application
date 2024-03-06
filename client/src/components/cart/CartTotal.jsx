@@ -18,7 +18,7 @@ export const CartTotal = () => {
                     </div>
                     <div className="flex items-center">
                         <Button type="primary" icon={<PlusCircleOutlined />} size="small" className="w-full flex items-center justify-center !rounded-full bg-green-600"></Button>
-                        <span className="text-xs">1</span>
+                        <span className="text-xs font-bold">1</span>
                         <Button type="primary" icon={<MinusCircleOutlined />} size="small" className="w-full flex items-center justify-center !rounded-full bg-red-600"></Button>
                         
                     </div>
@@ -38,7 +38,7 @@ export const CartTotal = () => {
                 <div className="border-b mt-4">
                     <div className="flex justify-between p-2">
                         <b className="text-lg text-green-500">Genel Toplam</b>
-                        <span className="text-xl">99₺</span>
+                        <span className="text-xl text-green-500">106.92₺</span>
                     </div>
                 </div>
                 <div className="py-4 px-2">

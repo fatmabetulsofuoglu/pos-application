@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Categories = () => {
     return (
-        <ul className='flex gap-4 flex-col'>
+        <ul className='flex gap-4 md:flex-col text-lg'>
             <li className='bg-gray-500 px-6 py-10 text-white w-full cursor-pointer hover:bg-red-500 transition-all text-center min-w-[145px]'><span className="">Tümü</span></li>
             <li className='bg-gray-500 px-6 py-10 text-white w-full cursor-pointer hover:bg-red-500 transition-all text-center min-w-[145px]'><span className="">Yiyecek</span></li>
             <li className='bg-gray-500 px-6 py-10 text-white w-full cursor-pointer hover:bg-red-500 transition-all text-center min-w-[145px]'><span className="">İçecek</span></li>
