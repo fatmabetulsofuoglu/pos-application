@@ -37,8 +37,8 @@ export const CartTotal = () => {
                 </div>
                 <div className="border-b mt-4">
                     <div className="flex justify-between p-2">
-                        <b className="text-lg text-green-500">Genel Toplam</b>
-                        <span className="text-xl text-green-500">106.92₺</span>
+                        <b className="text-green-500">Genel Toplam: </b>
+                        <span className="text-green-500">106.92₺</span>
                     </div>
                 </div>
                 <div className="py-4 px-2">
