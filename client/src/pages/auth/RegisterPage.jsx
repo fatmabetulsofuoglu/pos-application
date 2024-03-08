@@ -64,9 +64,8 @@ export const RegisterPage = () => {
             </Form.Item>
             <Form.Item>
               <Button
-                type="primary"
                 htmlType="submit"
-                className="w-full"
+                className="w-full bg-[#d02f28] text-white"
                 size="large"
               >
                 Kaydol
@@ -75,12 +74,12 @@ export const RegisterPage = () => {
           </Form>
           <div className="flex justify-center absolute left-0 bottom-10 w-full">
             Bir hesabınız var mı?&nbsp;
-            <Link to="/login" className="text-blue-600">
+            <Link to="/login" className="text-[#d02f28]">
               Şimdi giriş yap
             </Link>
           </div>
         </div>
-        <div className="xl:w-4/6 lg:w-3/5 md:w-1/2 md:flex hidden bg-[#6c63ff] h-full">
+        <div className="xl:w-4/6 lg:w-3/5 md:w-1/2 md:flex hidden bg-[#d02f28] h-full">
           <div className="w-full h-full flex items-center">
             <div className="w-full">
               <Carousel className="!h-full px-6">
