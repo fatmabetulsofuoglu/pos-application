@@ -1,8 +1,8 @@
-import { Button, Form, Input, Carousel } from "antd";
+import { Button, Form, Input, Carousel, Checkbox } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import AuthCarousel from "../../components/auth/AuthCarousel";
-export const RegisterPage = () => {
+export const LoginPage = () => {
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
@@ -14,22 +14,10 @@ export const RegisterPage = () => {
             className="pb-10"
           />
           <div className="pb-10 text-center">
-            <h3 className="text-4xl pb-3">Kayıt Ol</h3>
-            <p>Merhaba, devam etmek için lütfen kaydolunuz.</p>
+            <h3 className="text-4xl pb-3">Giriş Yap</h3>
+            <p>Merhaba, devam etmek için lütfen giriş yapınız.</p>
           </div>
           <Form layout="vertical">
-            <Form.Item
-              label="Kullanıcı Adı"
-              name={"username"}
-              rules={[
-                {
-                  required: true,
-                  message: "Kullanıcı Adı Alanı Boş Bırakılamaz!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
             <Form.Item
               label="E-mail"
               name={"email"}
@@ -54,17 +42,11 @@ export const RegisterPage = () => {
             >
               <Input.Password />
             </Form.Item>
-            <Form.Item
-              label="Şifre Tekrar"
-              name={"passwordAgain"}
-              rules={[
-                {
-                  required: true,
-                  message: "Şifre Tekrar Alanı Boş Bırakılamaz!",
-                },
-              ]}
-            >
-              <Input.Password />
+            <Form.Item>
+              <div className="flex justify-between items-center">
+                <Checkbox>Beni Hatırla</Checkbox>
+                <Link>Şifremi Unuttum</Link>
+              </div>
             </Form.Item>
             <Form.Item>
               <Button
@@ -72,14 +54,14 @@ export const RegisterPage = () => {
                 className="w-full bg-[#d02f28] text-white"
                 size="large"
               >
-                Kaydol
+                Giriş Yap
               </Button>
             </Form.Item>
           </Form>
           <div className="flex justify-center absolute left-0 bottom-10 w-full">
-            Bir hesabınız var mı?&nbsp;
-            <Link to="/login" className="text-[#d02f28]">
-              Şimdi giriş yap
+            Henüz bir hesabınız yok mu?&nbsp;
+            <Link to="/register" className="text-[#d02f28]">
+              Şimdi kaydol
             </Link>
           </div>
         </div>

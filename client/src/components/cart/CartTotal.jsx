@@ -6,7 +6,7 @@ import { ClearOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-des
 export const CartTotal = () => {
     return (
         <div className="cart h-full max-h-[calc(100vh_-_90px)] flex flex-col">
-            <h2 className="bg-gray-800 text-center py-4 text-white font-bold tracking-wide">Sepetteki Ürünler</h2>
+            <h2 className="bg-[#d02f28] text-center py-4 text-white font-bold tracking-wide">Sepetteki Ürünler</h2>
             <ul className="cart-items px-2 flex flex-col gap-y-3 py-2 overflow-y-auto">
                 <li className="cart-item flex justify-between">
                     <div class="flex items-center gap-x-1">
@@ -32,7 +32,7 @@ export const CartTotal = () => {
                     </div>
                     <div className="flex justify-between p-2">
                         <b>KDV %8</b>
-                        <span className="text-red-700">+7.92₺</span>
+                        <span className="text-[#d02f28]">+7.92₺</span>
                     </div>
                 </div>
                 <div className="border-b mt-4">
@@ -43,7 +43,7 @@ export const CartTotal = () => {
                 </div>
                 <div className="py-4 px-2">
                     <Button type="primary" size="large" className="w-full bg-blue-700 text-white">Sipariş Oluştur</Button>
-                    <Button type="primary" icon={<ClearOutlined />} size="large" className="w-full mt-2 flex items-center justify-center" danger>Temizle</Button>
+                    <Button  icon={<ClearOutlined />} size="large" className="bg-[#d02f28] text-white w-full mt-2 flex items-center justify-center">Temizle</Button>
                 </div>
             </div>
         </div>
