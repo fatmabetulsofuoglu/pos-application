@@ -8,7 +8,18 @@ router.get("/get-all", async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
+  }
+});
+
+//! get a User
+router.get("/", async (req, res) => {
+  const userID = req.body.userID;
+  try {
+    const user = await User.findById(userID);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 
@@ -39,7 +50,7 @@ router.delete("/delete-user", async (req, res) => {
     await User.findOneAndDelete({ _id: req.body.UserId });
     res.status(200).json("Item deleted successfully.");
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 });
 
