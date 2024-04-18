@@ -8,7 +8,7 @@ router.get("/get-all", async (req, res) => {
     const bills = await Bill.find();
     res.status(200).json(bills);
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 });
 
@@ -29,7 +29,7 @@ router.put("/update-bill", async (req, res) => {
     await Bill.findOneAndUpdate({ _id: req.body.BillId }, req.body);
     res.status(200).json("Item updated successfully.");
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 });
 
@@ -39,7 +39,7 @@ router.delete("/delete-Bill", async (req, res) => {
     await Bill.findOneAndDelete({ _id: req.body.BillId });
     res.status(200).json("Item deleted successfully.");
   } catch (error) {
-    console.log(error);
+    res.status(400).json(error);
   }
 });
 

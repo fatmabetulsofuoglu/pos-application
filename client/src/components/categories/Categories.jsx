@@ -1,32 +1,66 @@
-import React from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { Button, Form, Input, message, Modal } from "antd";
+import "./style.css";
 
-export const Categories = () => {
+export const Categories = ({ categories,setCategories }) => {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    try {
+      fetch("http://localhost:5002/api/categories/add-category", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+      message.success("Kategori başarıyla eklendi.");
+      form.resetFields();
+      setCategories([...categories,values]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ul className="flex gap-4 md:flex-col text-lg">
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
+      <li className="category-item">
         <span className="">Tümü</span>
       </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">Yiyecek</span>
+      {categories.map((item) => (
+        <li className="category-item" key={item.key}>
+          <span>{item.title}</span>
+        </li>
+      ))}
+      <li
+        className="category-item !bg-green-600 hover:opacity-80"
+        onClick={() => setIsAddModalOpen(true)}
+      >
+        <PlusOutlined className="md:text-2xl" />
       </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">İçecek</span>
-      </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">Meyve</span>
-      </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">Atıştırmalık</span>
-      </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">Kahvaltılık</span>
-      </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">Dondurma</span>
-      </li>
-      <li className="bg-[#d02f28] px-6 py-10 text-white w-full cursor-pointer hover:bg-[#ee7c1b] transition-all text-center min-w-[145px]">
-        <span className="">Et & Balık</span>
-      </li>
+      <Modal
+        title="Yeni Kategori Ekle"
+        open={isAddModalOpen}
+        onCancel={() => setIsAddModalOpen(false)}
+        footer={false}
+      >
+        <Form layout="vertical" onFinish={onFinish} form={form}>
+          <Form.Item
+            name="title"
+            label="Kategori Ekle"
+            rules={[
+              { required: true, message: "Kategori Alanı Boş Geçilemez!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item className="flex justify-end mb-0">
+            <Button type="primary" htmlType="submit">
+              Oluştur
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </ul>
   );
 };
