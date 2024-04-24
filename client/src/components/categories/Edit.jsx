@@ -33,6 +33,23 @@ const Edit = ({
     }
   };
 
+  const deleteCategory = (id) => {
+    if (window.confirm("Emin misiniz?")) {
+      try {
+        fetch("http://localhost:5002/api/categories/delete-category", {
+          method: "DELETE",
+          body: JSON.stringify({ categoryId: id }),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        });
+        message.success("Kategori silindi.");
+        setCategories(categories.filter((item)=>item._id!==id));
+      } catch (error) {
+        message.error("Hata");
+        console.log(error);
+      }
+    }
+  };
+
   const columns = [
     {
       title: "Kategoriler",
@@ -64,7 +81,7 @@ const Edit = ({
             >
               <EditOutlined
                 style={{ verticalAlign: "middle", color: orange[5] }}
-              />{" "}
+              />
               Düzenle
             </Button>
 
@@ -78,7 +95,10 @@ const Edit = ({
               Kaydet
             </Button>
 
-            <Button className=" text-slate-600 hover:text-sky-700">
+            <Button
+              onClick={() => deleteCategory(record._id)}
+              className=" text-slate-600 hover:text-sky-700"
+            >
               <DeleteOutlined
                 style={{ verticalAlign: "middle", color: red[5] }}
               />
