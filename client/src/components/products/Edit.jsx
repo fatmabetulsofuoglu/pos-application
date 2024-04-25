@@ -84,23 +84,24 @@ const Edit = () => {
 
   const columns = [
     {
-      title: "Ürün Adı",
+      title: "Ürün",
+      dataIndex: "img",
+      width: "2%",
+      render: (_, record) => {
+        return (
+          <img src={record.img} alt="" className="w-20 h-20 object-cover" />
+        );
+      },
+    },
+    {
+      title: "Adı",
       dataIndex: "title",
       width: "8%",
       render: (_, record) => {
         return <p>{record.title}</p>;
       },
     },
-    {
-      title: "Görsel",
-      dataIndex: "img",
-      width: "4%",
-      render: (_, record) => {
-        return (
-          <img src={record.img} alt="" className="w-full h-25 object-cover" />
-        );
-      },
-    },
+
     {
       title: "Fiyat",
       dataIndex: "price",

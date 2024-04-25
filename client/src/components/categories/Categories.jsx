@@ -18,13 +18,13 @@ export const Categories = ({ categories, setCategories }) => {
         </li>
       ))}
       <li
-        className="category-item !bg-green-600 hover:opacity-80"
+        className="category-item"
         onClick={() => setIsAddModalOpen(true)}
       >
         <PlusOutlined className="md:text-2xl" />
       </li>
       <li
-        className="category-item !bg-orange-400 hover:opacity-80"
+        className="category-item"
         onClick={() => setIsEditModalOpen(true)}
       >
         <EditOutlined className="md:text-2xl" />

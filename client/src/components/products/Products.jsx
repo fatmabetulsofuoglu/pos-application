@@ -43,13 +43,13 @@ export const Products = ({ categories }) => {
         </div>
       ))}
       <div
-        className="category-item !bg-green-600 hover:shadow-lg"
+        className="category-item"
         onClick={() => setIsAddModalOpen(true)}
       >
         <PlusOutlined className="md:text-2xl" />
       </div>
       <div
-        className="category-item !bg-orange-400 hover:shadow-lg min-h-[180px]"
+        className="category-item min-h-[180px]"
         onClick={() => navigate("/products")}
       >
         <EditOutlined className="md:text-2xl" />
