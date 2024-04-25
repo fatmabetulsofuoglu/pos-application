@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../components/header/Header";
 import { Table } from "antd";
 import { PrintBill } from "../components/bills/PrintBill";
-import PageTitle from "../components/header/PageTitle";
 
 export const BillPage = () => {
   const dataSource = [
@@ -11,14 +10,14 @@ export const BillPage = () => {
       name: "Elma",
       price: 3,
       mount: 5,
-      bill: "Yazdır",
+      bill: "Yazdır"
     },
     {
       key: "2",
       name: "Karpuz",
       price: 1,
       mount: 50,
-      bill: "Yazdır",
+      bill: "Yazdır"
     },
   ];
   const columns = [
@@ -26,6 +25,7 @@ export const BillPage = () => {
       title: "Ürün Adı",
       dataIndex: "name",
       key: "name",
+
     },
     {
       title: "Fiyat",
@@ -48,13 +48,16 @@ export const BillPage = () => {
   return (
     <>
       <Header />
+      <div className="p-6">
+        <h1 className="text-4xl font bold text-center">Faturalar</h1>
+      </div>
       <div className="px-6">
-        <PageTitle>Faturalar</PageTitle>
         <Table dataSource={dataSource} columns={columns} bordered />
         <div className="cart-total flex justify-end"></div>
-
-        <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </div>
+      <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+     
+    
     </>
   );
 };

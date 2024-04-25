@@ -2,7 +2,6 @@ import Header from "../components/header/Header";
 import { StatisticCard } from "../components/statistics/StatisticCard";
 import React, { useState, useEffect } from "react";
 import { Area, Pie } from "@ant-design/plots";
-import PageTitle from "../components/header/PageTitle";
 
 export const StatisticPage = () => {
   const [data, setData] = useState([]);
@@ -97,14 +96,12 @@ export const StatisticPage = () => {
   return (
     <>
       <Header />
-      <div className="px-6">
-        <PageTitle>
-          İstatistikler
-          <h3 className="text-sm  mt-2.5">
-            Hoşgeldin <span className="text-green-700 text-sm">admin</span>
-          </h3>
-        </PageTitle>
+      <div className="px-6 md:pb-0 pb-20">
+        <h2 className="text-4xl font bold text-center">İstatistikler</h2>
         <div className="statistic-section">
+          <h3 className="text-xl">
+            Hoşgeldin <span className="text-green-700 text-xl">admin</span>
+          </h3>
           <div className="statictic-cards grid xl:grid-cols-4 md:grid-cols-2 my-10 md:gap-10 gap-4">
             <StatisticCard
               title={"Toplam Müşteri"}
