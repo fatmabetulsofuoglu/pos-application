@@ -54,7 +54,6 @@ const Edit = ({
     {
       title: "Kategoriler",
       dataIndex: "title",
-      width: 400,
       render: (_, record) => {
         if (record._id === editingRow._id) {
           return (
@@ -70,6 +69,7 @@ const Edit = ({
     {
       title: "Eylemler",
       dataIndex: "action",
+      width: "42%",
       render: (text, record) => {
         return (
           <div className="flex items-center justify-between ">

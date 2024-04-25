@@ -2,6 +2,7 @@ import Header from "../components/header/Header";
 import React, { useState } from "react";
 import { Table, Card, Button } from "antd";
 import { CreateBill } from "../components/cart/CreateBill";
+import PageTitle from "../components/header/PageTitle";
 
 export const CartPage = () => {
   const dataSource = [
@@ -42,6 +43,7 @@ export const CartPage = () => {
     <>
       <Header />
       <div className="px-6">
+        <PageTitle>Sepet</PageTitle>
         <Table dataSource={dataSource} columns={columns} bordered />
         <div className="cart-total flex justify-end">
           <Card className="w-72">
