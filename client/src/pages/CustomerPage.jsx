@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import Header from "../components/header/Header";
+import PageTitle from "../components/header/PageTitle";
 
 export const CustomerPage = () => {
     const dataSource = [
@@ -45,10 +46,8 @@ export const CustomerPage = () => {
     
   return <>
   <Header />
-      <div className="p-6">
-        <h2 className="text-4xl font bold text-center">Müşteriler</h2>
-      </div>
       <div className="px-6">
+        <PageTitle>Müşteriler</PageTitle>
         <Table dataSource={dataSource} columns={columns} bordered />
         <div className="cart-total flex justify-end"></div>
       </div>

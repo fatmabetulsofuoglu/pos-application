@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/header/Header";
 import { Table } from "antd";
 import { PrintBill } from "../components/bills/PrintBill";
+import PageTitle from "../components/header/PageTitle";
 
 export const BillPage = () => {
   const dataSource = [
@@ -48,10 +49,8 @@ export const BillPage = () => {
   return (
     <>
       <Header />
-      <div className="p-6">
-        <h1 className="text-4xl font bold text-center">Faturalar</h1>
-      </div>
       <div className="px-6">
+        <PageTitle>Faturalar</PageTitle>
         <Table dataSource={dataSource} columns={columns} bordered />
         <div className="cart-total flex justify-end"></div>
       </div>
