@@ -1,7 +1,6 @@
 import { Button, Form, Input, message, Modal } from "antd";
 import React from "react";
 import { Select } from "antd";
-import { Categories } from "../categories/Categories";
 
 const Add = ({
   isAddModalOpen,
