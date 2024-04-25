@@ -1,7 +1,6 @@
 import { addProduct } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import { message } from "antd";
-import { addProduct } from "../../redux/cartSlice";
 
 const ProductItem = ({ item }) => {
   const dispatch = useDispatch();
