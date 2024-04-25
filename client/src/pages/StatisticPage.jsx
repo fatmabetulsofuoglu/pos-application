@@ -31,10 +31,8 @@ export const StatisticPage = () => {
       value: 5,
     },
   ];
-  useEffect(() => {
-    asyncFetch();
-  }, []);
-  const asyncFetch = () => {
+
+  const asyncFetch = async () => {
     fetch(
       "https://gw.alipayobjects.com/os/bmw-prod/360c3eae-0c73-46f0-a982-4746a6095010.json"
     )
@@ -44,6 +42,11 @@ export const StatisticPage = () => {
         console.log("fetch data failed", error);
       });
   };
+
+  useEffect(() => {
+    asyncFetch();
+  });
+
   const config = {
     data,
     xField: "timePeriod",

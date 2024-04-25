@@ -26,7 +26,7 @@ const Add = ({
         {
           ...values,
           _id: Math.random(),
-          title: values.title,
+          price: Number(values.price),
         },
       ]);
       setIsAddModalOpen(false);

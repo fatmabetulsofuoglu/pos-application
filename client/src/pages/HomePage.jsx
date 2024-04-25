@@ -6,14 +6,13 @@ import { Products } from "../components/products/Products";
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
 
-  useEffect(async () => {
+  
+  useEffect(() => {
     const getCategories = async () => {
       try {
         const res = await fetch("http://localhost:5002/api/categories/get-all");
         const data = await res.json();
-
         data &&
           setCategories(
             data.map((item) => {
@@ -24,10 +23,9 @@ const HomePage = () => {
         console.log(error);
       }
     };
+
     getCategories();
   }, []);
-
-  console.log(categories);
 
   return (
     <>

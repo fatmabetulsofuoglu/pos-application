@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
 import Add from "./Add";
+import { useNavigate } from "react-router-dom";
 
-export const Products = ({categories}) => {
+export const Products = ({ categories }) => {
   const [products, setProducts] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const navigate = useNavigate("/products");
 
-  useEffect(async () => {
-    const getProducts = async () => {
-      try {
-        const res = await fetch("http://localhost:5002/api/products/get-all");
-        const data = await res.json();
-        console.log(data);
-        setProducts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const getProducts = async () => {
+    try {
+      const res = await fetch("http://localhost:5002/api/products/get-all");
+      const data = await res.json();
+      console.log(data);
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
     getProducts();
-  }, []);
+  });
 
   return (
     <div className="products-wrapper grid grid-cols-card gap-4">
@@ -44,7 +47,8 @@ export const Products = ({categories}) => {
         <PlusOutlined className="md:text-2xl" />
       </div>
       <div
-        className="category-item !bg-orange-400 hover:shadow-lg"
+        className="category-item !bg-orange-400 hover:shadow-lg min-h-[180px]"
+        onClick={() => navigate("/products")}
       >
         <EditOutlined className="md:text-2xl" />
       </div>

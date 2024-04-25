@@ -42,7 +42,7 @@ const Edit = ({
           headers: { "Content-type": "application/json; charset=UTF-8" },
         });
         message.success("Kategori silindi.");
-        setCategories(categories.filter((item)=>item._id!==id));
+        setCategories(categories.filter((item) => item._id !== id));
       } catch (error) {
         message.error("Hata");
         console.log(error);
@@ -63,9 +63,7 @@ const Edit = ({
             </Form.Item>
           );
         } else {
-          {
-            return <p>{record.title}</p>;
-          }
+          return <p>{record.title}</p>;
         }
       },
     },

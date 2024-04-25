@@ -49,7 +49,7 @@ export const BillPage = () => {
     <>
       <Header />
       <div className="p-6">
-        <h2 className="text-4xl font bold text-center">Faturalar</h2>
+        <h1 className="text-4xl font bold text-center">Faturalar</h1>
       </div>
       <div className="px-6">
         <Table dataSource={dataSource} columns={columns} bordered />
