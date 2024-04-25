@@ -1,5 +1,7 @@
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import React, { useEffect, useState } from "react";
+import { orange, green, red } from "@ant-design/colors";
+import { SaveOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const Edit = () => {
   const [products, setProducts] = useState([]);
@@ -63,10 +65,10 @@ const Edit = () => {
     }
   };
 
-  const deleteCategory = (id) => {
+  const deleteProduct = (id) => {
     if (window.confirm("Emin misiniz?")) {
       try {
-        fetch(process.env.REACT_APP_SERVER_URL + "/api/products/delete-product", {
+        fetch("http://localhost:5002/api/products/delete-product", {
           method: "DELETE",
           body: JSON.stringify({ productId: id }),
           headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -90,47 +92,52 @@ const Edit = () => {
       },
     },
     {
-      title: "Ürün Görseli",
+      title: "Görsel",
       dataIndex: "img",
       width: "4%",
       render: (_, record) => {
         return (
-          <img src={record.img} alt="" className="w-full h-20 object-cover" />
+          <img src={record.img} alt="" className="w-full h-25 object-cover" />
         );
       },
     },
     {
-      title: "Ürün Fiyatı",
+      title: "Fiyat",
       dataIndex: "price",
-      width: "8%",
+      width: "2%",
     },
     {
       title: "Kategori",
       dataIndex: "category",
-      width: "8%",
+      width: "6%",
     },
     {
-      title: "Action",
+      title: "Eylem",
       dataIndex: "action",
-      width: "8%",
+      width: "4%",
       render: (_, record) => {
         return (
-          <div>
+          <div className="flex items-center justify-between ">
             <Button
-              type="link"
-              className="pl-0"
               onClick={() => {
                 setIsEditModalOpen(true);
                 setEditingItem(record);
               }}
+              className=" text-slate-600 hover:text-sky-700"
             >
+              <EditOutlined
+                style={{ verticalAlign: "middle", color: orange[5] }}
+              />
               Düzenle
             </Button>
+
             <Button
-              type="link"
-              danger
-              onClick={() => deleteCategory(record._id)}
+              onClick={() => deleteProduct(record._id)}
+              className=" text-slate-600 hover:text-sky-700"
             >
+              <DeleteOutlined
+                style={{ verticalAlign: "middle", color: red[5] }}
+              />
               Sil
             </Button>
           </div>
