@@ -84,9 +84,8 @@ const Edit = () => {
 
   const columns = [
     {
-      title: "Ürün",
       dataIndex: "img",
-      width: "2%",
+      width: "3%",
       render: (_, record) => {
         return (
           <img src={record.img} alt="" className="w-20 h-20 object-cover" />
@@ -94,7 +93,7 @@ const Edit = () => {
       },
     },
     {
-      title: "Adı",
+      title: "Ürün Adı",
       dataIndex: "title",
       width: "8%",
       render: (_, record) => {

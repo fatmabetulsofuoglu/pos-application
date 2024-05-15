@@ -3,49 +3,61 @@ import React, { useState } from "react";
 import { Table, Card, Button } from "antd";
 import { CreateBill } from "../components/cart/CreateBill";
 import PageTitle from "../components/header/PageTitle";
+import { useSelector } from "react-redux";
 
 export const CartPage = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Elma",
-      price: 3,
-      mount: 5,
-    },
-    {
-      key: "2",
-      name: "Karpuz",
-      price: 1,
-      mount: 50,
-    },
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const cart = useSelector((state) => state.cart);
+
   const columns = [
     {
+      width: "3%",
+      dataIndex: "img",
+      key: "img",
+      render: (_, record) => {
+        return (
+          <img src={record.img} alt="" className="w-20 h-20 object-cover" />
+        );
+      },
+    },
+    {
       title: "Ürün Adı",
-      dataIndex: "name",
-      key: "name",
+      width: "8%",
+      dataIndex: "title",
+      key: "title",
     },
     {
       title: "Fiyat",
-      dataIndex: "mount",
-      key: "mount",
+      dataIndex: "price",
+      key: "price",
+      width: "2%",
     },
     {
       title: "Adet",
-      dataIndex: "price",
-      key: "price",
+      dataIndex: "quantity",
+      key: "quantity",
+      width: "2%",
+    },
+    {
+      title: "Yazdır",
+      width: "4%",
+      dataIndex: "bill",
+      key: "bill",
     },
   ];
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <Header />
       <div className="px-6">
         <PageTitle>Sepet</PageTitle>
-        <Table dataSource={dataSource} columns={columns} bordered />
-        <div className="cart-total flex justify-end">
+        <Table
+          dataSource={cart.cartItems}
+          columns={columns}
+          bordered
+          pagination={false}
+        />
+        <div className="cart-total flex justify-end mt-5">
           <Card className="w-72">
             <div className="flex justify-between my-2">
               <span>Ara Toplam</span>
