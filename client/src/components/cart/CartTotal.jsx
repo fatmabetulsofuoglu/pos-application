@@ -19,13 +19,13 @@ export const CartTotal = () => {
           <li className="cart-item flex justify-between" key={item._id} >
             <div className="flex items-center gap-x-1">
               <img
-                src="https://www.agfresh.com.tr/public/uploads/elma.webp"
-                alt=""
+                src={item.img}
+                alt={item.title}
                 className="w-8 h-8 object-cover"
               ></img>
               <div className="flex flex-col ml-2">
-                <b>Elma</b>
-                <span className="text-xs">12₺ x 2</span>
+                <b>{item.title}</b>
+                <span className="text-xs">{item.price}₺ x {item.quantity}</span>
               </div>
             </div>
             <div className="flex items-center">
@@ -35,7 +35,7 @@ export const CartTotal = () => {
                 size="small"
                 className="w-full flex items-center justify-center !rounded-full bg-green-600"
               ></Button>
-              <span className="text-xs font-bold">1</span>
+              <span className="text-xs font-bold">{item.quantity}</span>
               <Button
                 type="primary"
                 icon={<MinusCircleOutlined />}
