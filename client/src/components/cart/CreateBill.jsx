@@ -1,6 +1,8 @@
 import { Form, Modal, Input, Select, Button, Card } from "antd";
 
+import { useSelector, useDispatch } from "react-redux";
 export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
+  const cart = useSelector((state) => state.cart);
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -49,20 +51,26 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
         </Form.Item>
         <Card className="w-full">
           <div className="flex justify-between my-2">
-            <span>Ara Toplam</span>
-            <span> 549.00₺</span>
+          <b>Ara Toplam</b>
+            <span>{cart.total > 0 ? cart.total.toFixed(2) : 0}₺</span>
           </div>
           <div className="flex justify-between my-2">
-            <span>KDV %8</span>
-            <span className="text-red-600">+43.92₺</span>
+          <b>KDV %{cart.tax}</b>
+            <span className="text-[#d02f28]">
+              {(cart.total * cart.tax) / 100 > 0
+                ? `+${((cart.total * cart.tax) / 100).toFixed(2)}`
+                : 0}
+              ₺
+            </span>
           </div>
           <div className="flex justify-between">
+          <b>Toplam: </b>
             <span>
-              <b>Toplam</b>
+              {cart.total + (cart.total * cart.tax) / 100 > 0
+                ? (cart.total + (cart.total * cart.tax) / 100).toFixed(2)
+                : 0}
+              ₺
             </span>
-            <b>
-              <span>+43.92₺</span>
-            </b>
           </div>
           <Button
             type="primary"

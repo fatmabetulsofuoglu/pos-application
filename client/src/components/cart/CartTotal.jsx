@@ -5,8 +5,7 @@ import {
   PlusCircleOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   deleteProduct,
   increase,
