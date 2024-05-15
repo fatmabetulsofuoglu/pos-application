@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { addProduct } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 
@@ -6,22 +7,22 @@ const ProductItem = ({ item }) => {
 
   const handleClick = () => {
     dispatch(addProduct({ ...item, quantity: 1 }));
-    console.log(item.title + " sepete eklendi");
+    message.success(item.title+ " sepete eklendi.")
   };
 
   return (
     <div
-      className="product-item border hover:shadow-lg cursor-pointer transition-all select-none"
+      className="product-item border bg-white hover:shadow-lg select-none hover:scale-110 transition duration-500 cursor-pointer"
       onClick={handleClick}
     >
       <div className="product-img">
         <img
           src={item.img}
           alt=""
-          className="h-28 object-cover w-full border-b"
+          className="h-28 object-cover w-full border-b "
         />
       </div>
-      <div className="product-info flex flex-col p-3">
+      <div className="product-info flex flex-col p-3 ">
         <span className="font-bold">{item.title}</span>
         <span>{item.price}₺</span>
       </div>
