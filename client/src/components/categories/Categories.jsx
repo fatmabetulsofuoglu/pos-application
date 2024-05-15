@@ -13,7 +13,7 @@ export const Categories = ({ categories, setCategories }) => {
         <span className="">Tümü</span>
       </li>
       {categories.map((item) => (
-        <li className="category-item" key={item.key}>
+        <li className="category-item" key={item._id}>
           <span>{item.title}</span>
         </li>
       ))}

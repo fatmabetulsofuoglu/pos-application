@@ -7,7 +7,7 @@ const ProductItem = ({ item }) => {
 
   const handleClick = () => {
     dispatch(addProduct({ ...item, quantity: 1 }));
-    message.success("Ürün Sepete Eklendi.")
+    console.log(item.title + " sepete eklendi");
   };
 
   return (

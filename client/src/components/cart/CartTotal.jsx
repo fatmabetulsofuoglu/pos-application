@@ -16,8 +16,8 @@ export const CartTotal = () => {
       </h2>
       <ul className="cart-items px-2 flex flex-col gap-y-3 py-2 overflow-y-auto">
         {cartItems.map((item) => (
-          <li className="cart-item flex justify-between">
-            <div class="flex items-center gap-x-1">
+          <li className="cart-item flex justify-between" key={item._id} >
+            <div className="flex items-center gap-x-1">
               <img
                 src="https://www.agfresh.com.tr/public/uploads/elma.webp"
                 alt=""
