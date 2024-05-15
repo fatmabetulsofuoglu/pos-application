@@ -6,9 +6,12 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addProduct, deleteProduct } from "../../redux/cartSlice";
 
 export const CartTotal = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   return (
     <div className="cart bg-[#ffffff] h-full max-h-[calc(100vh_-_90px)] flex flex-col">
       <h2 className="bg-[#ffffff] text-black border border-[#f0f0f0] px-6 py-5 w-full shadow-sm transition-all text-center min-w-[145px] flex items-center justify-center tracking-wide">
@@ -16,16 +19,19 @@ export const CartTotal = () => {
       </h2>
       <ul className="cart-items px-2 flex flex-col gap-y-3 py-2 overflow-y-auto">
         {cartItems.map((item) => (
-          <li className="cart-item flex justify-between" key={item._id} >
+          <li className="cart-item flex justify-between" key={item._id}>
             <div className="flex items-center gap-x-1">
               <img
                 src={item.img}
                 alt={item.title}
                 className="w-8 h-8 object-cover"
+                onClick={() => dispatch(deleteProduct(item))}
               ></img>
               <div className="flex flex-col ml-2">
                 <b>{item.title}</b>
-                <span className="text-xs">{item.price}₺ x {item.quantity}</span>
+                <span className="text-xs">
+                  {item.price}₺ x {item.quantity}
+                </span>
               </div>
             </div>
             <div className="flex items-center">
@@ -34,6 +40,7 @@ export const CartTotal = () => {
                 icon={<PlusCircleOutlined />}
                 size="small"
                 className="w-full flex items-center justify-center !rounded-full bg-green-600"
+                onClick={() => dispatch(addProduct(item))}
               ></Button>
               <span className="text-xs font-bold">{item.quantity}</span>
               <Button
@@ -41,6 +48,7 @@ export const CartTotal = () => {
                 icon={<MinusCircleOutlined />}
                 size="small"
                 className="w-full flex items-center justify-center !rounded-full bg-red-600"
+                onClick={() => dispatch(deleteProduct(item))}
               ></Button>
             </div>
           </li>
@@ -59,7 +67,7 @@ export const CartTotal = () => {
         </div>
         <div className="border-b mt-4">
           <div className="flex justify-between p-2">
-            <b >Genel Toplam: </b>
+            <b>Genel Toplam: </b>
             <span>106.92₺</span>
           </div>
         </div>
