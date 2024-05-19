@@ -4,6 +4,8 @@ import { Table, Card, Button, message } from "antd";
 import { CreateBill } from "../components/cart/CreateBill";
 import PageTitle from "../components/header/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
+import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { red } from "@ant-design/colors";
 import {
   deleteProduct,
   increase,
@@ -23,18 +25,16 @@ export const CartPage = () => {
 
   const columns = [
     {
-      width: "4%",
+      width: "1%",
       dataIndex: "img",
       key: "img",
       render: (_, record) => {
-        return (
-          <img src={record.img} alt="" className="w-20 h-20 object-cover" />
-        );
+        return <img src={record.img} alt="" className="w-7 h-7 object-cover" />;
       },
     },
     {
       title: "Ürün Adı",
-      width: "8%",
+      width: "6%",
       dataIndex: "title",
       key: "title",
     },
@@ -45,7 +45,7 @@ export const CartPage = () => {
       key: "category",
     },
     {
-      title: "Fiyat",
+      title: "Birim Fiyatı",
       dataIndex: "price",
       key: "price",
       width: "2%",
@@ -58,53 +58,54 @@ export const CartPage = () => {
       title: "Ürün Adeti",
       dataIndex: "quantity",
       key: "quantity",
-      width: "2%",
+      width: "3%",
       render: (text, record) => {
         return (
-          <div className="flex items-center">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-              onClick={() => dispatch(increase(record))}
-            />
-            <span className="font-bold w-6 inline-block text-center">
-              {record.quantity}
+          <div className="flex items-center justify-between">
+            <span className="font-bold inline-block text-center">
+              {record.quantity} adet
             </span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-              onClick={() => {
-                if (record.quantity === 1) {
-                  if (window.confirm("Ürün Silinsin Mi?")) {
-                    dispatch(decrease(record));
-                    message.success("Ürün Sepetten Silindi.");
+            <div className="flex items-center">
+              <Button
+                type="text"
+                icon={<PlusCircleOutlined />}
+                className="flex items-center justify-center"
+                onClick={() => dispatch(increase(record))}
+              />
+              <Button
+                type="text"
+                className="flex items-center justify-center"
+                icon={<MinusCircleOutlined />}
+                onClick={() => {
+                  if (record.quantity === 1) {
+                    if (window.confirm("Ürün Silinsin Mi?")) {
+                      dispatch(decrease(record));
+                      message.success("Ürün Sepetten Silindi.");
+                    }
                   }
-                }
-                if (record.quantity > 1) {
-                  dispatch(decrease(record));
-                }
-              }}
-            />
+                  if (record.quantity > 1) {
+                    dispatch(decrease(record));
+                  }
+                }}
+              />
+            </div>
+            <div className="flex items-center">
+              <Button
+                danger
+                onClick={() => {
+                  if (window.confirm(record.title + " sepetten silinsin mi?")) {
+                    dispatch(deleteProduct(record));
+                    message.success("Ürün sepetten kaldırıldı.");
+                  }
+                }}
+              >
+                <DeleteOutlined
+                  style={{ verticalAlign: "middle", color: red[5] }}
+                />
+              </Button>
+            </div>
           </div>
         );
-      },
-    },
-    {
-      width: "4%",
-      dataIndex: "bill",
-      key: "bill",
-      render: (_, record) => {
-        return <Button danger 
-        onClick={() => {
-          if (window.confirm("Emin misiniz?")) {
-            dispatch(deleteProduct(record));
-            message.success("Ürün sepetten kaldırıldı.");
-          }
-        }}>Kaldır</Button>;
       },
     },
   ];
@@ -119,14 +120,15 @@ export const CartPage = () => {
           columns={columns}
           bordered
           pagination={false}
+          scroll={{ y: 300 }}
         />
         <div className="cart-total flex justify-end mt-5">
           <Card className="w-72">
-            <div className="flex justify-between my-2">
+            <div className="flex justify-between px-3 py-2">
               <b>Ara Toplam</b>
               <span>{cart.total > 0 ? cart.total.toFixed(2) : 0}₺</span>
             </div>
-            <div className="flex justify-between my-2">
+            <div className="flex justify-between px-3 py-2">
               <b>KDV %{cart.tax}</b>
               <span className="text-[#d02f28]">
                 {(cart.total * cart.tax) / 100 > 0
@@ -135,7 +137,7 @@ export const CartPage = () => {
                 ₺
               </span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between px-3 py-2">
               <b>Toplam: </b>
               <span>
                 {cart.total + (cart.total * cart.tax) / 100 > 0
@@ -144,28 +146,30 @@ export const CartPage = () => {
                 ₺
               </span>
             </div>
-            <Button
-              type="primary"
-              onClick={() => setIsModalOpen(true)}
-              size="middle"
-              className="bg-green-600 mt-3 w-full"
-            >
-              Sipariş Oluştur
-            </Button>
-            <Button
-              icon={<ClearOutlined />}
-              size="large"
-              className="bg-[#d02f28] text-white w-full mt-2 flex items-center justify-center"
-              onClick={() => {
-                if (window.confirm("Emin misiniz?")) {
-                  dispatch(clearCart());
-                  message.success("Sepet temizlendi.");
-                }
-              }}
-              disabled={cart.cartItems.length === 0}
-            >
-              Temizle
-            </Button>
+            <div className="py-4 px-2">
+              <Button
+                type="primary"
+                icon={<ShoppingCartOutlined />}
+                className="w-full bg-blue-700 text-white text-sm"
+                onClick={() => setIsModalOpen(true)}
+                disabled={cart.cartItems.length === 0}
+              >
+                Sipariş Oluştur
+              </Button>
+              <Button
+                icon={<ClearOutlined />}
+                className="bg-[#d02f28] text-white w-full mt-2 flex items-center justify-center"
+                onClick={() => {
+                  if (window.confirm("Emin misiniz?")) {
+                    dispatch(clearCart());
+                    message.success("Sepet temizlendi.");
+                  }
+                }}
+                disabled={cart.cartItems.length === 0}
+              >
+                Temizle
+              </Button>
+            </div>
           </Card>
         </div>
       </div>

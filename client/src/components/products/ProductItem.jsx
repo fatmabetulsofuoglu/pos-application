@@ -15,16 +15,16 @@ const ProductItem = ({ item }) => {
       className="product-item border bg-white hover:shadow-lg select-none hover:scale-110 transition duration-500 cursor-pointer"
       onClick={handleClick}
     >
-      <div className="product-img">
+      <div className="product-img flex justify-center items-center py-2">
         <img
           src={item.img}
           alt=""
-          className="h-28 object-cover w-full border-b "
+          className="h-20 w-20 object-cover"
         />
       </div>
-      <div className="product-info flex flex-col p-3 ">
-        <span className="font-bold">{item.title}</span>
-        <span>{item.price}₺</span>
+      <div className="product-info flex flex-col px-3 py-2 border-t ">
+        <span className="text text-xs font-bold">{item.title}</span>
+        <span className="text text-xs">{item.price}₺</span>
       </div>
     </div>
   );

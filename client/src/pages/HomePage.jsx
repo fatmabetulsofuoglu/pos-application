@@ -40,7 +40,7 @@ const HomePage = () => {
         <div className="products flex-[8] max-h-[calc(100vh-_-112px)] overflow-y-auto">
           <Products categories={categories} />
         </div>
-        <div className="cart-wrapper min-w-[180px] md:-mr-[24px] md:-mt-[24px] border">
+        <div className="cart-wrapper min-w-[250px] md:-mr-[24px] md:-mt-[24px] border">
           <CartTotal />
         </div>
       </div>

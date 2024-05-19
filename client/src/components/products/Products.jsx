@@ -26,7 +26,7 @@ export const Products = ({ categories }) => {
   });
 
   return (
-    <div className="products-wrapper grid grid-cols-card gap-4">
+    <div className="products-wrapper grid grid-cols-6 gap-4">
       {products.map((item) => (
         <ProductItem item={item} key={item._id} />
       ))}
@@ -37,7 +37,7 @@ export const Products = ({ categories }) => {
         <PlusOutlined className="md:text-2xl" />
       </div>
       <div
-        className="category-item min-h-[180px]"
+        className="category-item min-h-[150px]"
         onClick={() => navigate("/products")}
       >
         <EditOutlined className="md:text-2xl" />

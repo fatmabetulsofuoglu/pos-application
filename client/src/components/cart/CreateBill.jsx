@@ -1,10 +1,37 @@
-import { Form, Modal, Input, Select, Button, Card } from "antd";
-
+import { Form, Modal, Input, Select, Button, Card, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../../redux/cartSlice";
+import { useNavigate } from "react-router-dom";
+
 export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
   const cart = useSelector((state) => state.cart);
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    try {
+      const res = await fetch("http://localhost:5002/api/bills/add-bill", {
+        method: "POST",
+        body: JSON.stringify({
+          ...values,
+          subTotal: cart.total,
+          tax: (cart.total * cart.tax) / 100,
+          total: (cart.total + (cart.total * cart.tax) / 100).toFixed(2),
+          cartItems: cart.cartItems,
+        }),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+
+      if (res.status === 200) {
+        message.success("Fatura oluşturuldu.");
+        setIsModalOpen(false);
+        dispatch(clearCart());
+        navigate("/bills");
+      }
+    } catch (error) {
+      message.danger("Fatura oluşturulamadı.");
+      console.log(error);
+    }
   };
 
   return (
@@ -15,7 +42,7 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
       onCancel={() => setIsModalOpen(false)}
       onFinish={onFinish}
     >
-      <Form layout="vertical">
+      <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
           name="customerName"
           label="Müşterinin Adı"
@@ -29,7 +56,7 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
           <Input placeholder="Müşterinin Adını Yazınız" />
         </Form.Item>
         <Form.Item
-          name="phoneNumber"
+          name="customerPhone"
           label="Telefon Numarası"
           rules={[
             { required: true, message: "Müşteri telefonu alanı zorunludur." },
@@ -51,11 +78,11 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
         </Form.Item>
         <Card className="w-full">
           <div className="flex justify-between my-2">
-          <b>Ara Toplam</b>
+            <b>Ara Toplam</b>
             <span>{cart.total > 0 ? cart.total.toFixed(2) : 0}₺</span>
           </div>
           <div className="flex justify-between my-2">
-          <b>KDV %{cart.tax}</b>
+            <b>KDV %{cart.tax}</b>
             <span className="text-[#d02f28]">
               {(cart.total * cart.tax) / 100 > 0
                 ? `+${((cart.total * cart.tax) / 100).toFixed(2)}`
@@ -64,7 +91,7 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
             </span>
           </div>
           <div className="flex justify-between">
-          <b>Toplam: </b>
+            <b>Toplam: </b>
             <span>
               {cart.total + (cart.total * cart.tax) / 100 > 0
                 ? (cart.total + (cart.total * cart.tax) / 100).toFixed(2)

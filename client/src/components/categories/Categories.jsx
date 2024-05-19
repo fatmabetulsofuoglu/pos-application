@@ -8,7 +8,7 @@ export const Categories = ({ categories, setCategories }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   return (
-    <ul className="flex gap-4 md:flex-col text-lg">
+    <ul className="flex gap-4 md:flex-col text-sm">
       <li className="category-item">
         <span className="">Tümü</span>
       </li>

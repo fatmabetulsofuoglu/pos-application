@@ -88,7 +88,11 @@ const Edit = () => {
       width: "3%",
       render: (_, record) => {
         return (
-          <img src={record.img} alt="" className="w-20 h-20 object-cover" />
+          <img
+            src={record.img}
+            alt=""
+            className="w-8 h-8 object-cover hover:scale-125 transition duration-500 cursor-pointer"
+          />
         );
       },
     },
@@ -114,10 +118,10 @@ const Edit = () => {
     {
       title: "Eylem",
       dataIndex: "action",
-      width: "4%",
+      width: "5%",
       render: (_, record) => {
         return (
-          <div className="flex items-center justify-between ">
+          <div className="flex items-center justify-start ">
             <Button
               onClick={() => {
                 setIsEditModalOpen(true);
@@ -133,7 +137,7 @@ const Edit = () => {
 
             <Button
               onClick={() => deleteProduct(record._id)}
-              className=" text-slate-600 hover:text-sky-700"
+              className=" text-slate-600 hover:text-sky-700 mx-4"
             >
               <DeleteOutlined
                 style={{ verticalAlign: "middle", color: red[5] }}
@@ -154,8 +158,7 @@ const Edit = () => {
         columns={columns}
         rowKey={"_id"}
         scroll={{
-          x: 1000,
-          y: 600,
+          y: 500,
         }}
       />
       <Modal
