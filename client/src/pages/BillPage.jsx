@@ -1,62 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/header/Header";
-import { Table } from "antd";
+import { Table, Button } from "antd";
 import { PrintBill } from "../components/bills/PrintBill";
 import PageTitle from "../components/header/PageTitle";
+import { PrinterOutlined } from "@ant-design/icons";
+import { gray } from "@ant-design/colors";
 
 export const BillPage = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Elma",
-      price: 3,
-      mount: 5,
-      bill: "Yazdır"
-    },
-    {
-      key: "2",
-      name: "Karpuz",
-      price: 1,
-      mount: 50,
-      bill: "Yazdır"
-    },
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [billItem, setBillItem] = useState();
+
+  useEffect(() => {
+    const getBills = async () => {
+      try {
+        const res = await fetch("http://localhost:5002/api/bills/get-all");
+        const data = await res.json();
+        setBillItem(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBills();
+  }, []);
+
   const columns = [
     {
-      title: "Ürün Adı",
-      dataIndex: "name",
-      key: "name",
-
+      title: "Müşteri Adı",
+      dataIndex: "customerName",
+      key: "customerName",
     },
     {
-      title: "Fiyat",
-      dataIndex: "mount",
-      key: "mount",
+      title: "Müşteri Telefon",
+      dataIndex: "customerPhone",
+      key: "customerPhone",
     },
     {
-      title: "Adet",
-      dataIndex: "price",
-      key: "price",
+      title: "Ödeme Yöntemi",
+      dataIndex: "payMethod",
+      key: "payMethod",
+    },
+    {
+      title: "Oluşturma Tarihi",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => {
+        return <span>{text.substring(0, 10)}</span>;
+      },
+    },
+    {
+      title: "Ara Toplam + KDV",
+      key: "subTotalAndTax",
+      render: (text, record) => {
+        const subTotal = record.subTotal;
+        const tax = record.tax;
+        return `${subTotal + "₺ + " + tax + "₺"}`;
+      },
+    },
+    {
+      title: "Toplam",
+      dataIndex: "total",
+      key: "total",
     },
     {
       title: "Yazdır",
-      dataIndex: "bill",
-      key: "bill",
+      dataIndex: "print",
+      key: "print",
+      render: (text) => {
+        return (
+          <Button
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
+            <PrinterOutlined
+              style={{ verticalAlign: "middle", color: gray[5] }}
+            />
+          </Button>
+        );
+      },
     },
   ];
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <Header />
       <div className="px-6">
         <PageTitle>Faturalar</PageTitle>
-        <Table dataSource={dataSource} columns={columns} bordered />
+        <Table dataSource={billItem} columns={columns} bordered />
         <div className="cart-total flex justify-end"></div>
       </div>
       <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-     
-    
     </>
   );
 };
