@@ -90,7 +90,12 @@ export const BillPage = () => {
       <Header />
       <div className="px-6">
         <PageTitle>Faturalar</PageTitle>
-        <Table dataSource={billItem} columns={columns} bordered />
+        <Table
+          dataSource={billItem}
+          columns={columns}
+          rowKey={"_id"}
+          bordered
+        />
         <div className="cart-total flex justify-end"></div>
       </div>
       <PrintBill

@@ -66,9 +66,9 @@ export const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
               </div>
             </div>
             <div className="bill-table-area mt-8">
-              <table className="min-w-full divide-y divide-slate-500 overflow-hidden">
+              <table className="min-w-full divide-y divide-slate-500 overflow-hidden" >
                 <thead>
-                  <tr className="border-b border-slate-200">
+                  <tr className="border-b border-slate-200" >
                     <th
                       scope="col"
                       className="py-3.5 text-left text-sm font-normal text-slate-700 md:pl-0 sm:table-cell hidden"
@@ -110,7 +110,7 @@ export const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
                 </thead>
                 <tbody>
                   {customer?.cartItems.map((item) => (
-                    <tr className="border-b border-slate-200">
+                    <tr className="border-b border-slate-200" key={item._id}>
                       <td className="py-4 sm:table-cell hidden">
                         <img
                           src={item.img}

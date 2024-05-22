@@ -45,7 +45,12 @@ export const CustomerPage = () => {
       <Header />
       <div className="px-6">
         <PageTitle>Müşteriler</PageTitle>
-        <Table dataSource={billItem} columns={columns} bordered />
+        <Table
+          dataSource={billItem}
+          rowKey={"_id"}
+          columns={columns}
+          bordered
+        />
         <div className="cart-total flex justify-end"></div>
       </div>
     </>

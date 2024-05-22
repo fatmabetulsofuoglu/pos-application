@@ -1,8 +1,29 @@
-import { Button, Form, Input, Carousel } from "antd";
-import React from "react";
+import { Button, Form, Input, Carousel, message } from "antd";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthCarousel from "../../components/auth/AuthCarousel";
+import { useNavigate } from "react-router-dom";
+
 export const RegisterPage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const onFinish = async (values) => {
+    try {
+      const res = await fetch("http://localhost:5002/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+      if (res.status === 200) {
+        message.success("Kayıt işlemi gerçekleştirildi.");
+        navigate("/login");
+      }
+    } catch (error) {
+      message.error("Bir şeyler yanlış gitti.");
+      console.log(error);
+    }
+  };
+
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
@@ -28,7 +49,7 @@ export const RegisterPage = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Kullanıcı adınızı giriniz" />
             </Form.Item>
             <Form.Item
               label="E-mail"
@@ -40,7 +61,7 @@ export const RegisterPage = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="E-posta adresinizi giriniz" />
             </Form.Item>
             <Form.Item
               label="Şifre"
@@ -52,7 +73,7 @@ export const RegisterPage = () => {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="Şifre giriniz" />
             </Form.Item>
             <Form.Item
               label="Şifre Tekrar"
@@ -69,21 +90,20 @@ export const RegisterPage = () => {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        "Şifreler birbiriyle eşleşmelidir."
-                      )
+                      new Error("Şifreler birbiriyle eşleşmelidir.")
                     );
                   },
                 }),
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="Şifrenizi tekrar giriniz" />
             </Form.Item>
             <Form.Item>
               <Button
                 htmlType="submit"
                 className="w-full bg-[#d02f28] text-white"
                 size="large"
+                loading={loading}
               >
                 Kaydol
               </Button>
