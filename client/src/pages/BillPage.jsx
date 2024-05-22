@@ -9,6 +9,9 @@ import { gray } from "@ant-design/colors";
 export const BillPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [billItem, setBillItem] = useState();
+  const [customer, setCustomer] = useState();
+
+  console.log(customer);
 
   useEffect(() => {
     const getBills = async () => {
@@ -65,11 +68,12 @@ export const BillPage = () => {
       title: "Yazdır",
       dataIndex: "print",
       key: "print",
-      render: (text) => {
+      render: (_, record) => {
         return (
           <Button
             onClick={() => {
               setIsModalOpen(true);
+              setCustomer(record);
             }}
           >
             <PrinterOutlined
@@ -89,7 +93,11 @@ export const BillPage = () => {
         <Table dataSource={billItem} columns={columns} bordered />
         <div className="cart-total flex justify-end"></div>
       </div>
-      <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <PrintBill
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        customer={customer}
+      />
     </>
   );
 };
