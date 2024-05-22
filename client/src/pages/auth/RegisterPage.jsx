@@ -1,13 +1,15 @@
-import { Button, Form, Input, Carousel, message } from "antd";
-import React, { useState } from "react";
+import { Button, Carousel, Form, Input, message } from "antd";
 import { Link } from "react-router-dom";
 import AuthCarousel from "../../components/auth/AuthCarousel";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
   const onFinish = async (values) => {
+    setLoading(true);
     try {
       const res = await fetch("http://localhost:5002/api/auth/register", {
         method: "POST",
@@ -17,6 +19,7 @@ export const RegisterPage = () => {
       if (res.status === 200) {
         message.success("Kayıt işlemi gerçekleştirildi.");
         navigate("/login");
+        setLoading(false);
       }
     } catch (error) {
       message.error("Bir şeyler yanlış gitti.");
@@ -38,7 +41,7 @@ export const RegisterPage = () => {
             <h3 className="text-4xl pb-3">Kayıt Ol</h3>
             <p>Merhaba, devam etmek için lütfen kaydolunuz.</p>
           </div>
-          <Form layout="vertical">
+          <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
               label="Kullanıcı Adı"
               name={"username"}
