@@ -32,7 +32,6 @@ app.use("/api/bills", billRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 
-
 app.listen(port, () => {
   connect();
   console.log(`Example app listening on port ${port}`);

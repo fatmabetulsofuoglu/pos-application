@@ -1,8 +1,47 @@
-import { Button, Form, Input, Carousel, Checkbox } from "antd";
-import React from "react";
+import { Button, Form, Input, Carousel, Checkbox, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthCarousel from "../../components/auth/AuthCarousel";
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5002/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
+
+      const user = await res.json();
+      console.log(user);
+
+      if (res.status === 200) {
+        localStorage.setItem(
+          "posUser",
+          JSON.stringify({
+            username: user.username,
+            email: user.email,
+          })
+        );
+        message.success("Giriş işlemi gerçekleştirildi.");
+        navigate("/");
+        setLoading(false);
+      } else if (res.status === 404) {
+        message.error("Kullanıcı bulunamadı");
+      } else if (res.status === 403) {
+        message.error("Kullanıcı adı ya da şifre hatalı!");
+      }
+    } catch (error) {
+      message.error("Bir şeyler yanlış gitti.");
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
@@ -17,7 +56,13 @@ export const LoginPage = () => {
             <h3 className="text-4xl pb-3">Giriş Yap</h3>
             <p>Merhaba, devam etmek için lütfen giriş yapınız.</p>
           </div>
-          <Form layout="vertical">
+          <Form
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={{
+              remember: false,
+            }}
+          >
             <Form.Item
               label="E-mail"
               name={"email"}
@@ -53,6 +98,7 @@ export const LoginPage = () => {
                 htmlType="submit"
                 className="w-full bg-[#d02f28] text-white"
                 size="large"
+                loading={loading}
               >
                 Giriş Yap
               </Button>
