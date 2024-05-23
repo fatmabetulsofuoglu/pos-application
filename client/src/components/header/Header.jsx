@@ -12,7 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import "./style.css";
 
-const Header = () => {
+const Header = ({ setSearch }) => {
   const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
@@ -41,6 +41,7 @@ const Header = () => {
             size="large"
             placeholder="Ürün Ara..."
             prefix={<SearchOutlined />}
+            onChange={(e) => setSearch(e.target.value.toLowerCase())}
             className="rounded-full max-w-[800px]"
           />
         </div>

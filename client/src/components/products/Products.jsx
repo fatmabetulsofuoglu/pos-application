@@ -1,39 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PlusOutlined, EditOutlined } from "@ant-design/icons";
 import Add from "./Add";
 import { useNavigate } from "react-router-dom";
 import ProductItem from "./ProductItem";
 
-
-
-export const Products = ({ categories }) => {
-  const [products, setProducts] = useState([]);
+export const Products = ({ categories, filtered, products, setProducts, search }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const navigate = useNavigate("/products");
-
-  const getProducts = async () => {
-    try {
-      const res = await fetch("http://localhost:5002/api/products/get-all");
-      const data = await res.json();
-      setProducts(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getProducts();
-  });
+  const navigate = useNavigate();
 
   return (
     <div className="products-wrapper grid grid-cols-6 gap-4">
-      {products.map((item) => (
-        <ProductItem item={item} key={item._id} />
-      ))}
-      <div
-        className="category-item"
-        onClick={() => setIsAddModalOpen(true)}
-      >
+      {filtered
+        .filter((product) => product.title?.toLowerCase().includes(search))
+        .map((item) => (
+          <ProductItem item={item} key={item._id} />
+        ))}
+      <div className="category-item" onClick={() => setIsAddModalOpen(true)}>
         <PlusOutlined className="md:text-2xl" />
       </div>
       <div
