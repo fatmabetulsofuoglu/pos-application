@@ -16,7 +16,7 @@ export const CustomerPage = () => {
     const getBills = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5002/api/bills/get-all");
+        const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills/get-all");
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
