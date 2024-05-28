@@ -24,9 +24,10 @@ export const CustomerPage = () => {
         setBillItem(data);
       } catch (error) {
         console.error(error);
-        message.error("Failed to load data");
+        message.error("Veri yüklenemedi");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     getBills();
   }, []);
