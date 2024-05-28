@@ -100,7 +100,7 @@ export const StatisticPage = () => {
           className="absolute top-1/2 h-screen w-screen flex justify-center"
         />
       ) : (
-        <div className="px-6">
+        <div className="px-6 h-screen overflow-auto pb-40">
           <PageTitle>
             İstatistikler
             <p className="text-sm pt-3">
@@ -108,7 +108,7 @@ export const StatisticPage = () => {
               <span className="text-green-700 text-sm">{user.username}</span>
             </p>
           </PageTitle>
-          <div className="statistic-section mb-20">
+          <div className="statistic-section">
             <div className="statictic-cards grid xl:grid-cols-4 md:grid-cols-2 my-10 md:gap-2 gap-2">
               <StatisticCard
                 title={"Toplam Müşteri"}
@@ -132,10 +132,10 @@ export const StatisticPage = () => {
               />
             </div>
             <div className="flex justify-between gap-10 lg:flex-row flex-col items-center">
-              <div className="lg:w-1/2 lg:h-72 h-72">
+              <div className="lg:w-1/2">
                 <Area {...config} />
               </div>
-              <div className="lg:w-1/2 lg:h-72 h-72">
+              <div className="lg:w-1/2">
                 <Pie {...config2} />
               </div>
             </div>
