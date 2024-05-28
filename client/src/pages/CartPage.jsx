@@ -240,6 +240,7 @@ export const CartPage = () => {
         <Table
           dataSource={cart.cartItems}
           columns={columns}
+          rowKey={"_id"}
           bordered
           pagination={false}
           scroll={{ y: 300 }}

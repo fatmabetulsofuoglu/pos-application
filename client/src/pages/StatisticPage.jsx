@@ -3,23 +3,23 @@ import { StatisticCard } from "../components/statistics/StatisticCard";
 import React, { useState, useEffect } from "react";
 import { Area, Pie } from "@ant-design/plots";
 import PageTitle from "../components/header/PageTitle";
+import { Spin } from "antd";
 
 export const StatisticPage = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const user = JSON.parse(localStorage.getItem("posUser"));
 
   const asyncFetch = async () => {
-    fetch("http://localhost:5002/api/bills/get-all")
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log("fetch data failed", error);
-      });
+    try {
+      const response = await fetch("http://localhost:5002/api/bills/get-all");
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.log("fetch data failed", error);
+    }
   };
-
-  useEffect(() => {
-    asyncFetch();
-  });
 
   const getProducts = async () => {
     try {
@@ -32,8 +32,13 @@ export const StatisticPage = () => {
   };
 
   useEffect(() => {
-    getProducts();
-  });
+    const fetchData = async () => {
+      await asyncFetch();
+      await getProducts();
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
 
   const config = {
     data,
@@ -89,46 +94,54 @@ export const StatisticPage = () => {
   return (
     <>
       <Header />
-      <div className="px-6">
-        <PageTitle>
-          İstatistikler
-          <p className="text-sm pt-3">
-            Hoşgeldin <span className="text-green-700 text-sm">admin</span>
-          </p>
-        </PageTitle>
-        <div className="statistic-section">
-          <div className="statictic-cards grid xl:grid-cols-4 md:grid-cols-2 my-10 md:gap-10 gap-4">
-            <StatisticCard
-              title={"Toplam Müşteri"}
-              amount={data?.length}
-              img={"images/user.png"}
-            />
-            <StatisticCard
-              title={"Toplam Kazanç"}
-              amount={totalAmount()}
-              img={"images/money.png"}
-            />
-            <StatisticCard
-              title={"Toplam Satış"}
-              amount={data?.length}
-              img={"images/sale.png"}
-            />
-            <StatisticCard
-              title={"Toplam Ürün"}
-              amount={products?.length}
-              img={"images/product.png"}
-            />
-          </div>
-          <div className="flex justify-between gap-10 lg:flex-row flex-col items-center">
-            <div className="lg:w-1/2 lg:h-full h-72">
-              <Area {...config} />
+      {loading ? (
+        <Spin
+          size="large"
+          className="absolute top-1/2 h-screen w-screen flex justify-center"
+        />
+      ) : (
+        <div className="px-6">
+          <PageTitle>
+            İstatistikler
+            <p className="text-sm pt-3">
+              Hoşgeldin{" "}
+              <span className="text-green-700 text-sm">{user.username}</span>
+            </p>
+          </PageTitle>
+          <div className="statistic-section mb-20">
+            <div className="statictic-cards grid xl:grid-cols-4 md:grid-cols-2 my-10 md:gap-2 gap-2">
+              <StatisticCard
+                title={"Toplam Müşteri"}
+                amount={data?.length}
+                img={"images/user.png"}
+              />
+              <StatisticCard
+                title={"Toplam Kazanç"}
+                amount={totalAmount()}
+                img={"images/money.png"}
+              />
+              <StatisticCard
+                title={"Toplam Satış"}
+                amount={data?.length}
+                img={"images/sale.png"}
+              />
+              <StatisticCard
+                title={"Toplam Ürün"}
+                amount={products?.length}
+                img={"images/product.png"}
+              />
             </div>
-            <div className="lg:w-1/2 lg:h-full h-72">
-              <Pie {...config2} />
+            <div className="flex justify-between gap-10 lg:flex-row flex-col items-center">
+              <div className="lg:w-1/2 lg:h-72 h-72">
+                <Area {...config} />
+              </div>
+              <div className="lg:w-1/2 lg:h-72 h-72">
+                <Pie {...config2} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

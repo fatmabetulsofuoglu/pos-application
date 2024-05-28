@@ -4,6 +4,7 @@ import Edit from "../components/products/Edit";
 import PageTitle from "../components/header/PageTitle";
 
 export const ProductPage = () => {
+  
   return (
     <>
       <Header />

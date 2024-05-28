@@ -7,6 +7,7 @@ import { gray } from "@ant-design/colors";
 import Highlighter from "react-highlight-words";
 import { Button, Input, Space, Table } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 export const BillPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -206,16 +207,23 @@ export const BillPage = () => {
   return (
     <>
       <Header />
-      <div className="px-6">
-        <PageTitle>Faturalar</PageTitle>
-        <Table
-          dataSource={billItem}
-          columns={columns}
-          rowKey={"_id"}
-          bordered
+      {billItem ? (
+        <div className="px-6">
+          <PageTitle>Faturalar</PageTitle>
+          <Table
+            dataSource={billItem}
+            columns={columns}
+            rowKey={"_id"}
+            bordered
+          />
+          <div className="cart-total flex justify-end"></div>
+        </div>
+      ) : (
+        <Spin
+          size="large"
+          className="absolute top-1/2 h-screen w-screen flex justify-center"
         />
-        <div className="cart-total flex justify-end"></div>
-      </div>
+      )}
       <PrintBill
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

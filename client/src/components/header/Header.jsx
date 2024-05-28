@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Badge, Input, message } from "antd";
 import {
   SearchOutlined,
@@ -14,6 +14,7 @@ import "./style.css";
 
 const Header = ({ setSearch }) => {
   const cart = useSelector((state) => state.cart);
+  const { pathName } = useLocation();
   const navigate = useNavigate();
 
   const logOut = () => {
@@ -36,13 +37,18 @@ const Header = ({ setSearch }) => {
             ></img>
           </Link>
         </div>
-        <div className="header-search flex-1 flex justify-center">
+        <div
+          className="header-search flex-1 flex justify-center"
+          onClick={() => {
+            pathName !== "/" && navigate("/");
+          }}
+        >
           <Input
+            className="rounded-full max-w-[800px]"
             size="large"
             placeholder="Ürün Ara..."
             prefix={<SearchOutlined />}
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
-            className="rounded-full max-w-[800px]"
           />
         </div>
         <div className="menu-links">

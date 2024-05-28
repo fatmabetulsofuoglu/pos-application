@@ -1,24 +1,32 @@
-import React, { useState, useEffect,useRef} from "react";
-import { Button, Input, Space, Table } from "antd";
+import React, { useState, useEffect, useRef } from "react";
+import { Button, Input, Space, Table, Spin, message } from "antd";
 import Highlighter from "react-highlight-words";
 import Header from "../components/header/Header";
 import PageTitle from "../components/header/PageTitle";
 import { SearchOutlined } from "@ant-design/icons";
 
 export const CustomerPage = () => {
-  const [billItem, setBillItem] = useState([]);  const [searchText, setSearchText] = useState("");
+  const [billItem, setBillItem] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
 
   useEffect(() => {
     const getBills = async () => {
+      setLoading(true);
       try {
         const res = await fetch("http://localhost:5002/api/bills/get-all");
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
         const data = await res.json();
         setBillItem(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        message.error("Failed to load data");
       }
+      setLoading(false);
     };
     getBills();
   }, []);
@@ -102,7 +110,7 @@ export const CustomerPage = () => {
               close();
             }}
           >
-            kapat
+            Kapat
           </Button>
         </Space>
       </div>
@@ -164,16 +172,23 @@ export const CustomerPage = () => {
   return (
     <>
       <Header />
-      <div className="px-6">
-        <PageTitle>Müşteriler</PageTitle>
-        <Table
-          dataSource={billItem}
-          rowKey={"_id"}
-          columns={columns}
-          bordered
+      {loading ? (
+        <Spin
+          size="large"
+          className="absolute top-1/2 h-screen w-screen flex justify-center"
         />
-        <div className="cart-total flex justify-end"></div>
-      </div>
+      ) : (
+        <div className="px-6">
+          <PageTitle>Müşteriler</PageTitle>
+          <Table
+            dataSource={billItem}
+            rowKey={"_id"}
+            columns={columns}
+            bordered
+          />
+          <div className="cart-total flex justify-end"></div>
+        </div>
+      )}
     </>
   );
 };
