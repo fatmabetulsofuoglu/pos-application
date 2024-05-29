@@ -1,7 +1,8 @@
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { orange, green, red } from "@ant-design/colors";
-import { SaveOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 const Edit = () => {
   const [products, setProducts] = useState([]);
@@ -9,13 +10,17 @@ const Edit = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState({});
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/products/get-all");
+        const res = await fetch(
+          process.env.REACT_APP_SERVER_URL + "/api/products/get-all"
+        );
         const data = await res.json();
         setProducts(data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -27,7 +32,9 @@ const Edit = () => {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/categories/get-all");
+        const res = await fetch(
+          process.env.REACT_APP_SERVER_URL + "/api/categories/get-all"
+        );
         const data = await res.json();
         data &&
           setCategories(
@@ -68,11 +75,14 @@ const Edit = () => {
   const deleteProduct = (id) => {
     if (window.confirm("Emin misiniz?")) {
       try {
-        fetch(process.env.REACT_APP_SERVER_URL + "/api/products/delete-product", {
-          method: "DELETE",
-          body: JSON.stringify({ productId: id }),
-          headers: { "Content-type": "application/json; charset=UTF-8" },
-        });
+        fetch(
+          process.env.REACT_APP_SERVER_URL + "/api/products/delete-product",
+          {
+            method: "DELETE",
+            body: JSON.stringify({ productId: id }),
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+          }
+        );
         message.success("Ürün başarıyla silindi.");
         setProducts(products.filter((item) => item._id !== id));
       } catch (error) {
@@ -152,15 +162,22 @@ const Edit = () => {
 
   return (
     <>
-      <Table
-        bordered
-        dataSource={products}
-        columns={columns}
-        rowKey={"_id"}
-        scroll={{
-          y: 500,
-        }}
-      />
+      {loading ? (
+        <Spin
+          size="large"
+          className="absolute top-1/2 h-screen w-screen flex justify-center"
+        />
+      ) : (
+        <Table
+          bordered
+          dataSource={products}
+          columns={columns}
+          rowKey={"_id"}
+          scroll={{
+            y: 500,
+          }}
+        />
+      )}
       <Modal
         title="Yeni Ürün Ekle"
         open={isEditModalOpen}
