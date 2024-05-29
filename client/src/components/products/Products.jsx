@@ -14,7 +14,6 @@ export const Products = ({
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   return (
     <div className="products-wrapper grid grid-cols-6 gap-4">
       <div className="product-item flex flex-col justify-center items-center border bg-white hover:shadow-lg select-none hover:scale-110 transition duration-500 cursor-pointer">
