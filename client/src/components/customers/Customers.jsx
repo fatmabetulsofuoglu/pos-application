@@ -11,7 +11,6 @@ export const Customers = () => {
   const searchInput = useRef(null);
 
 
-
   useEffect(() => {
     const fetchCustomers = async () => {
       setLoading(true);

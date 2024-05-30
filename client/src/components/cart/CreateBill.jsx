@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Form, Modal, Input, Select, Button, Card, message } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../../redux/cartSlice";
@@ -7,6 +8,29 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const res = await fetch(
+          process.env.REACT_APP_SERVER_URL + "/api/customers/get-all"
+        );
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await res.json();
+        setCustomers(data);
+      } catch (error) {
+        console.error(error);
+        message.error("Müşteriler getirilirken bir hata oluştu.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomers();
+  }, []);
 
   const onFinish = async (values) => {
     try {
@@ -29,40 +53,36 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
         navigate("/bills");
       }
     } catch (error) {
-      message.danger("Fatura oluşturulamadı.");
-      console.log(error);
+      message.error("Fatura oluşturulamadı.");
+      console.error(error);
     }
   };
 
   return (
     <Modal
       title="Fatura Oluştur"
-      open={isModalOpen}
-      footer={false}
+      visible={isModalOpen}
       onCancel={() => setIsModalOpen(false)}
-      onFinish={onFinish}
+      footer={null}
     >
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
-          name="customerName"
-          label="Müşterinin Adı"
+          name="customerId"
+          label="Müşteri Seçiniz"
           rules={[
             {
               required: true,
-              message: "Müşteri adı alanı zorunludur.",
+              message: "Lütfen bir müşteri seçiniz.",
             },
           ]}
         >
-          <Input placeholder="Müşterinin Adını Yazınız" />
-        </Form.Item>
-        <Form.Item
-          name="customerPhone"
-          label="Telefon Numarası"
-          rules={[
-            { required: true, message: "Müşteri telefonu alanı zorunludur." },
-          ]}
-        >
-          <Input placeholder="Bir Telefon Numarası Yazınız" />
+          <Select placeholder="Müşteri Seçiniz" loading={loading}>
+            {customers.map((customer) => (
+              <Select.Option key={customer._id} value={customer._id}>
+                {customer.name} - {customer.phone}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item
           name="payMethod"
