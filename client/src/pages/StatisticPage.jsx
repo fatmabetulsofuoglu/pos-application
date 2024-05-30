@@ -6,18 +6,19 @@ import PageTitle from "../components/header/PageTitle";
 import { Spin } from "antd";
 
 export const StatisticPage = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = JSON.parse(localStorage.getItem("posUser"));
 
-  const asyncFetch = async () => {
+  // Müşteri verilerini almak için bir işlev
+  const fetchCustomerData = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills/get-all");
+      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/api/customers/get-all");
       const json = await response.json();
       setData(json);
     } catch (error) {
-      console.log("fetch data failed", error);
+      console.log("fetch customer data failed", error);
     }
   };
 
@@ -33,12 +34,17 @@ export const StatisticPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await asyncFetch();
+      await fetchCustomerData();
       await getProducts();
       setLoading(false);
     };
     fetchData();
   }, []);
+
+  // Toplam müşteri sayısını hesaplamak için bir işlev
+  const getTotalCustomers = () => {
+    return data.length;
+  };
 
   const config = {
     data,
@@ -110,11 +116,13 @@ export const StatisticPage = () => {
           </PageTitle>
           <div className="statistic-section">
             <div className="statictic-cards grid xl:grid-cols-4 md:grid-cols-2 my-10 md:gap-2 gap-2">
+              {/* Toplam Müşteri Kartı */}
               <StatisticCard
                 title={"Toplam Müşteri"}
-                amount={data?.length}
+                amount={getTotalCustomers()} // Toplam müşteri sayısını görüntüle
                 img={"images/user.png"}
               />
+              {/* Diğer istatistik kartları */}
               <StatisticCard
                 title={"Toplam Kazanç"}
                 amount={totalAmount()}
@@ -122,12 +130,12 @@ export const StatisticPage = () => {
               />
               <StatisticCard
                 title={"Toplam Satış"}
-                amount={data?.length}
+                amount={data.length}
                 img={"images/sale.png"}
               />
               <StatisticCard
                 title={"Toplam Ürün"}
-                amount={products?.length}
+                amount={products.length}
                 img={"images/product.png"}
               />
             </div>

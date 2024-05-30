@@ -20,27 +20,32 @@ const Add = ({
         }
       );
       const data = await response.json();
-      if (response.ok) {
-        message.success("Müşteri başarıyla eklendi.");
-        form.resetFields();
-        setCustomers([
-          ...customers,
-          {
-            _id: data._id,
-            name: values.name,
-            phone: values.phone,
-            // Add any other fields here if needed
-          },
-        ]);
-        setIsAddModalOpen(false);
-      } else {
-        message.error(data.message || "Bir hata oluştu.");
+  
+      if (!response.ok) {
+        // Hata durumunda mesaj göster ve işlemi durdur
+        throw new Error(data.message || "Bir hata oluştu.");
       }
+  
+      // Başarı durumunda mesaj göster
+      message.success("Müşteri başarıyla eklendi.");
+      form.resetFields();
+      setCustomers([
+        ...customers,
+        {
+          _id: data._id,
+          name: values.name,
+          phone: values.phone,
+          // Diğer alanları buraya ekleyin
+        },
+      ]);
+      setIsAddModalOpen(false);
     } catch (error) {
-      console.log(error);
-      message.error("Bir hata oluştu.");
+      // Hata durumunda mesaj göster
+      console.error("Error:", error);
+      message.error(error.message || "Bir hata oluştu.");
     }
   };
+  
 
   return (
     <Modal
