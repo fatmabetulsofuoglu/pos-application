@@ -1,0 +1,30 @@
+.product-item {
+    position: relative;
+  }
+  
+  .ribbon {
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .ribbon span {
+    position: absolute;
+    display: block;
+    width: 100px;
+    padding: 5px 0;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 12px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    top: 0;
+    left: -25px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  

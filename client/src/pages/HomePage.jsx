@@ -51,7 +51,7 @@ const HomePage = () => {
       <Header setSearch={setSearch} />
       {products && categories ? (
         <div className="home px-6 flex md:flex-row flex-col justify-between gap-10 md:pb-0 pb-24 h-screen">
-          <div className="categories overflow-auto max-h-[calc(100vh_-_112px)] md:pb-10">
+          <div className="categories overflow-auto max-h-[calc(100vh_-_112px)] md:pb-10 p-2">
             <Categories
               categories={categories}
               setCategories={setCategories}
@@ -59,7 +59,7 @@ const HomePage = () => {
               products={products}
             />
           </div>
-          <div className="products flex-[8] max-h-[calc(100vh_-_112px)] overflow-y-auto pb-10 min-h-[500px]">
+          <div className="products flex-[8] max-h-[calc(100vh_-_112px)] overflow-y-auto pb-10 min-h-[500px] p-2">
             <Products
               categories={categories}
               filtered={filtered}
