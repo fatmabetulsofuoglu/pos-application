@@ -11,7 +11,7 @@ import { Spin } from "antd";
 
 export const BillPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [billItem, setBillItem] = useState();
+  const [billItems, setBillItems] = useState([]);
   const [customer, setCustomer] = useState();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -20,9 +20,11 @@ export const BillPage = () => {
   useEffect(() => {
     const getBills = async () => {
       try {
-        const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills/get-all");
+        const res = await fetch(
+          process.env.REACT_APP_SERVER_URL + "/api/bills/get-all"
+        );
         const data = await res.json();
-        setBillItem(data);
+        setBillItems(data);
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +59,7 @@ export const BillPage = () => {
       >
         <Input
           ref={searchInput}
-          placeholder={`Ara`}
+          placeholder={`Search`}
           value={selectedKeys[0]}
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -78,7 +80,7 @@ export const BillPage = () => {
               width: 90,
             }}
           >
-            Ara
+            Search
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
@@ -87,7 +89,7 @@ export const BillPage = () => {
               width: 90,
             }}
           >
-            Sıfırla
+            Reset
           </Button>
           <Button
             type="link"
@@ -100,7 +102,7 @@ export const BillPage = () => {
               setSearchedColumn(dataIndex);
             }}
           >
-            Filtrele
+            Filter
           </Button>
           <Button
             type="link"
@@ -109,7 +111,7 @@ export const BillPage = () => {
               close();
             }}
           >
-            kapat
+            Close
           </Button>
         </Space>
       </div>
@@ -149,7 +151,6 @@ export const BillPage = () => {
       title: "Müşteri Adı",
       dataIndex: "customerName",
       key: "customerName",
-      ...getColumnSearchProps("customerName"),
     },
     {
       title: "Müşteri Telefon",
@@ -162,7 +163,7 @@ export const BillPage = () => {
       key: "payMethod",
     },
     {
-      title: "Oluşturma Tarihi",
+      title: "Oluşturulma Tarihi",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (text) => {
@@ -170,7 +171,7 @@ export const BillPage = () => {
       },
     },
     {
-      title: "Ara Toplam + KDV",
+      title: "Ara Toplam + Vergi",
       key: "subTotalAndTax",
       render: (text, record) => {
         const subTotal = record.subTotal;
@@ -207,11 +208,11 @@ export const BillPage = () => {
   return (
     <>
       <Header />
-      {billItem ? (
+      {billItems ? (
         <div className="px-6">
           <PageTitle>Faturalar</PageTitle>
           <Table
-            dataSource={billItem}
+            dataSource={billItems}
             columns={columns}
             rowKey={"_id"}
             bordered

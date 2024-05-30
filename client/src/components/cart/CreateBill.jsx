@@ -34,17 +34,25 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
 
   const onFinish = async (values) => {
     try {
-      const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills/add-bill", {
-        method: "POST",
-        body: JSON.stringify({
-          ...values,
-          subTotal: cart.total,
-          tax: (cart.total * cart.tax) / 100,
-          total: (cart.total + (cart.total * cart.tax) / 100).toFixed(2),
-          cartItems: cart.cartItems,
-        }),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      });
+      const selectedCustomer = customers.find(
+        (customer) => customer._id === values.customerId
+      );
+      const res = await fetch(
+        process.env.REACT_APP_SERVER_URL + "/api/bills/add-bill",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ...values,
+            customerName: selectedCustomer.name,
+            customerPhone: selectedCustomer.phone,
+            subTotal: cart.total,
+            tax: (cart.total * cart.tax) / 100,
+            total: (cart.total + (cart.total * cart.tax) / 100).toFixed(2),
+            cartItems: cart.cartItems,
+          }),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        }
+      );
 
       if (res.status === 200) {
         message.success("Fatura oluşturuldu.");
