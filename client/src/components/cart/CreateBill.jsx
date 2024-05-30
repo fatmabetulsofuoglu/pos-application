@@ -69,7 +69,7 @@ export const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
   return (
     <Modal
       title="Fatura Oluştur"
-      visible={isModalOpen}
+      open={isModalOpen}
       onCancel={() => setIsModalOpen(false)}
       footer={null}
     >

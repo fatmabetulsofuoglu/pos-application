@@ -183,6 +183,9 @@ export const BillPage = () => {
       title: "Toplam",
       dataIndex: "total",
       key: "total",
+      render: (record) => {
+        return `${record + "₺"}`;
+      },
     },
     {
       title: "Yazdır",

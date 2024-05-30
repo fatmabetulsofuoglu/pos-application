@@ -29,17 +29,12 @@ export const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
               <div className="grid sm:grid-cols-4 grid-cols-3 gap-12">
                 <div className="text-md text-slate-500">
                   <p className="font-bold text-slate-700">Fatura Detayı:</p>
-                  <p>Unwrapped</p>
-                  <p> Fake Street 123</p>
-                  <p> San Javier </p>
-                  <p> CA 1234</p>
+                  <p>{customer?.customerAddress}</p>
                 </div>
                 <div className="text-md text-slate-500">
                   <p className="font-bold text-slate-700">Fatura:</p>
                   <b>{customer?.customerName}</b>
-                  <p> Tesla Street 007</p>
-                  <p> Frisco </p>
-                  <p> CA 0000</p>
+                  <p> {customer?.customerPhone}</p>
                 </div>
                 <div className="text-md text-slate-500">
                   <div>

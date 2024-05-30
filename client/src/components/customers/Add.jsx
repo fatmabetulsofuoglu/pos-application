@@ -11,11 +11,14 @@ const Add = ({
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch(process.env.REACT_APP_SERVER_URL + "/api/customers/add-customer", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_SERVER_URL + "/api/customers/add-customer",
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         message.success("Müşteri başarıyla eklendi.");
@@ -29,6 +32,7 @@ const Add = ({
             // Add any other fields here if needed
           },
         ]);
+        setIsAddModalOpen(false);
       } else {
         message.error(data.message || "Bir hata oluştu.");
       }
@@ -41,11 +45,12 @@ const Add = ({
   return (
     <Modal
       title="Yeni Müşteri Ekle"
-      visible={isAddModalOpen}
+      open={isAddModalOpen}
       onCancel={() => setIsAddModalOpen(false)}
       footer={null}
     >
       <Form layout="vertical" onFinish={onFinish} form={form}>
+
         <Form.Item
           name="name"
           label="İsim"
@@ -53,16 +58,22 @@ const Add = ({
         >
           <Input />
         </Form.Item>
+
         <Form.Item
           name="phone"
           label="Telefon"
-          rules={[
-            { required: true, message: "Telefon Alanı Boş Geçilemez!" },
-          ]}
+          rules={[{ required: true, message: "Telefon Alanı Boş Geçilemez!" }]}
         >
           <Input />
         </Form.Item>
-        {/* Add other fields as needed */}
+
+        <Form.Item
+          name="address"
+          label="Adres"
+          rules={[{ required: true, message: "Telefon Alanı Boş Geçilemez!" }]}
+        >
+          <Input />
+        </Form.Item>
         <Form.Item className="flex justify-end mb-0">
           <Button type="primary" htmlType="submit">
             Oluştur

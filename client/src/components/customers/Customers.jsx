@@ -10,7 +10,6 @@ export const Customers = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
 
-
   useEffect(() => {
     const fetchCustomers = async () => {
       setLoading(true);
@@ -177,15 +176,12 @@ export const Customers = () => {
           className="absolute top-1/2 h-screen w-screen flex justify-center"
         />
       ) : (
-        <div className="px-6">
-          <Table
-            dataSource={customers}
-            rowKey={"_id"}
-            columns={columns}
-            bordered
-          />
-          <div className="cart-total flex justify-end"></div>
-        </div>
+        <Table
+          dataSource={customers}
+          rowKey={"_id"}
+          columns={columns}
+          bordered
+        />
       )}
     </>
   );
