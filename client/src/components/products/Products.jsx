@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
 import Add from "./Add";
 import { useNavigate } from "react-router-dom";
 import ProductItem from "./ProductItem";

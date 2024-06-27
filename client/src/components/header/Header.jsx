@@ -1,5 +1,6 @@
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Badge, Input, message } from "antd";
+import { Badge, Input, message, Dropdown, Menu } from "antd";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -9,6 +10,7 @@ import {
   UserOutlined,
   BarChartOutlined,
   LogoutOutlined,
+  ApartmentOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import "./style.css";
@@ -26,26 +28,61 @@ const Header = ({ setSearch }) => {
     }
   };
 
+  const managementMenu = (
+    <Menu className="management-menu">
+      <Menu.Item key="1">
+        <Link to="/products" className="menu-item">
+          <ProductOutlined className="menu-icon" />
+          <span className="menu-text">Tüm Ürünler</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link to="/categories" className="menu-item">
+          <ApartmentOutlined className="menu-icon" />
+          <span className="menu-text">Kategoriler</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link to="/bills" className="menu-item">
+          <CopyOutlined className="menu-icon" />
+          <span className="menu-text">Faturalar</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <Link to="/customers" className="menu-item">
+          <UserOutlined className="menu-icon" />
+          <span className="menu-text">Müşteriler</span>
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="5">
+        <Link to="/statistic" className="menu-item">
+          <BarChartOutlined className="menu-icon" />
+          <span className="menu-text">İstatistikler</span>
+        </Link>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div className="border-b mb-6">
-      <header className="py-4 px-6 flex justify-between items-center gap-10">
+    <div className="header-container">
+      <header className="header-content">
         <div className="logo">
           <Link to="/">
             <img
               src="https://www.motifsoft.com/wp-content/uploads/2023/11/MotifSoft-logo-colored-1.png"
               width="200px"
               alt="MOTİF SOFT"
-            ></img>
+            />
           </Link>
         </div>
         <div
-          className="header-search flex-1 flex justify-center"
+          className="header-search"
           onClick={() => {
             pathname !== "/" && navigate("/");
           }}
         >
           <Input
-            className="rounded-full max-w-[800px]"
+            className="search-input"
             size="large"
             placeholder="Ürün Ara..."
             prefix={<SearchOutlined />}
@@ -60,13 +97,12 @@ const Header = ({ setSearch }) => {
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Anasayfa</span>
           </Link>
-          <Link
-            to={"/products"}
-            className={`menu-link ${pathname === "/products" ? "active" : ""}`}
-          >
-            <ProductOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Ürünler</span>
-          </Link>
+          <Dropdown overlay={managementMenu} trigger={["hover"]}>
+            <div className="menu-link">
+              <ProductOutlined className="md:text-2xl text-xl" />
+              <span className="md:text-xs text-[10px]">Yönetim</span>
+            </div>
+          </Dropdown>
           <Badge
             count={cart.cartItems.length}
             offset={[0, 6]}
@@ -80,27 +116,6 @@ const Header = ({ setSearch }) => {
               <span className="md:text-xs text-[10px]">Sepet</span>
             </Link>
           </Badge>
-          <Link
-            to={"/bills"}
-            className={`menu-link ${pathname === "/bills" && "active"}`}
-          >
-            <CopyOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Faturalar</span>
-          </Link>
-          <Link
-            to={"/customers"}
-            className={`menu-link ${pathname === "/customers" && "active"}`}
-          >
-            <UserOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Müşteriler</span>
-          </Link>
-          <Link
-            to={"/statistic"}
-            className={`menu-link ${pathname === "/statistic" && "active"}`}
-          >
-            <BarChartOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">İstatistikler</span>
-          </Link>
           <div onClick={logOut}>
             <Link className="menu-link">
               <LogoutOutlined className="md:text-2xl text-xl" />

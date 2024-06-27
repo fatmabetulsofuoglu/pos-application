@@ -7,13 +7,11 @@ import {
   Modal,
   Select,
   Table,
-  Space,
   Spin,
 } from "antd";
 import Add from "../components/products/Add";
 import { orange, red } from "@ant-design/colors";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import Highlighter from "react-highlight-words";
 import Header from "../components/header/Header";
 import PageTitle from "../components/header/PageTitle";
 
@@ -25,7 +23,6 @@ export const ProductPage = () => {
   const [editingItem, setEditingItem] = useState({});
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(true);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -217,6 +214,11 @@ export const ProductPage = () => {
     setFilteredProducts(filteredData);
   };
 
+  const handleReset = () => {
+    form.resetFields();
+    setFilteredProducts(products);
+  };
+
   return (
     <>
       <Header />
@@ -240,11 +242,11 @@ export const ProductPage = () => {
               </Button>
             </div>
             <Form
+              form={form}
               layout="inline"
               onFinish={handleSearchFilter}
               style={{ marginBottom: 16 }}
             >
-              <Form.Item></Form.Item>
               <Form.Item name="search">
                 <Input placeholder="Ürün Adı Ara" />
               </Form.Item>
@@ -263,7 +265,10 @@ export const ProductPage = () => {
                 </Select>
               </Form.Item>
               <Form.Item>
-                <Button htmlType="submit">Filtrele</Button>
+                <Button type="primary" htmlType="submit">Filtrele</Button>
+              </Form.Item>
+              <Form.Item>
+                <Button onClick={handleReset}>Filtreleri Temizle</Button>
               </Form.Item>
             </Form>
           </div>

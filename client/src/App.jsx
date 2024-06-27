@@ -7,6 +7,7 @@ import { StatisticPage } from "./pages/StatisticPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { LoginPage } from "./pages/auth/LoginPage";
 import { ProductPage } from "./pages/ProductPage";
+import { CategoryPage } from "./pages/CategoryPage";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -66,6 +67,14 @@ function App() {
             element={
               <RouterControl>
                 <ProductPage />
+              </RouterControl>
+            }
+          />
+          <Route
+            path="/categories"
+            element={
+              <RouterControl>
+                <CategoryPage />
               </RouterControl>
             }
           />

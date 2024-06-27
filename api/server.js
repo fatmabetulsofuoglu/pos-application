@@ -32,7 +32,7 @@ app.use("/api/products", productRoute);
 app.use("/api/bills", billRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
-//app.use("/api/customers", customerRoute);
+app.use("/api/customers", customerRoute);
 
 app.listen(port, () => {
   connect();
