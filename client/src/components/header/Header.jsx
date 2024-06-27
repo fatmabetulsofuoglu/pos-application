@@ -3,6 +3,7 @@ import { Badge, Input, message } from "antd";
 import {
   SearchOutlined,
   HomeOutlined,
+  ProductOutlined,
   ShoppingCartOutlined,
   CopyOutlined,
   UserOutlined,
@@ -57,7 +58,14 @@ const Header = ({ setSearch }) => {
             className={`menu-link ${pathname === "/" ? "active" : ""}`}
           >
             <HomeOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Ana Sayfa</span>
+            <span className="md:text-xs text-[10px]">Anasayfa</span>
+          </Link>
+          <Link
+            to={"/products"}
+            className={`menu-link ${pathname === "/products" ? "active" : ""}`}
+          >
+            <ProductOutlined className="md:text-2xl text-xl" />
+            <span className="md:text-xs text-[10px]">Ürünler</span>
           </Link>
           <Badge
             count={cart.cartItems.length}

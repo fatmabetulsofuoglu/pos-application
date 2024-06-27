@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -10,17 +10,15 @@ import {
   Space,
   Spin,
 } from "antd";
+import Add from "../components/products/Add";
 import { orange, red } from "@ant-design/colors";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import Header from "../components/header/Header";
 import PageTitle from "../components/header/PageTitle";
 
 export const ProductPage = () => {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -120,7 +118,6 @@ export const ProductPage = () => {
     }
   };
 
-  
   const columns = [
     {
       dataIndex: "img",
@@ -232,12 +229,22 @@ export const ProductPage = () => {
               justifyContent: "space-between",
             }}
           >
-            <span>Ürünler</span>
+            <div className="flex items-center">
+              Ürünler
+              <Button
+                onClick={() => setIsAddModalOpen(true)}
+                className="ml-10 flex items-center"
+              >
+                <PlusOutlined />
+                Yeni Ürün Ekle
+              </Button>
+            </div>
             <Form
               layout="inline"
               onFinish={handleSearchFilter}
               style={{ marginBottom: 16 }}
             >
+              <Form.Item></Form.Item>
               <Form.Item name="search">
                 <Input placeholder="Ürün Adı Ara" />
               </Form.Item>
@@ -256,9 +263,7 @@ export const ProductPage = () => {
                 </Select>
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Filtrele
-                </Button>
+                <Button htmlType="submit">Filtrele</Button>
               </Form.Item>
             </Form>
           </div>
@@ -352,6 +357,13 @@ export const ProductPage = () => {
             </Form.Item>
           </Form>
         </Modal>
+        <Add
+          isAddModalOpen={isAddModalOpen}
+          setIsAddModalOpen={setIsAddModalOpen}
+          categories={categories}
+          products={products}
+          setProducts={setProducts}
+        />
       </div>
     </>
   );
