@@ -4,8 +4,7 @@ import { Button, Card, Input, message, Space, Table } from "antd";
 import { CreateBill } from "../components/cart/CreateBill";
 import PageTitle from "../components/header/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
-import { SearchOutlined } from "@ant-design/icons";
-import { DeleteOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { DeleteOutlined, ShoppingCartOutlined, SearchOutlined} from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import {
   deleteProduct,

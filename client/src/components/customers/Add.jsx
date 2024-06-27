@@ -1,16 +1,12 @@
 import { Button, Form, Input, message, Modal } from "antd";
 import React from "react";
 
-const Add = ({
-  isAddModalOpen,
-  setIsAddModalOpen,
-  customers,
-  setCustomers,
-}) => {
+const Add = ({ isAddModalOpen, setIsAddModalOpen, setProducts }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
     try {
+      // API'ye yeni müşteri bilgilerini gönder
       const response = await fetch(
         process.env.REACT_APP_SERVER_URL + "/api/customers/add-customer",
         {
@@ -20,32 +16,23 @@ const Add = ({
         }
       );
       const data = await response.json();
-  
+
       if (!response.ok) {
-        // Hata durumunda mesaj göster ve işlemi durdur
+        // Hata durumunda Modal içerisinde hata mesajını göster
         throw new Error(data.message || "Bir hata oluştu.");
       }
-  
-      // Başarı durumunda mesaj göster
-      message.success("Müşteri başarıyla eklendi.");
-      form.resetFields();
-      setCustomers([
-        ...customers,
-        {
-          _id: data._id,
-          name: values.name,
-          phone: values.phone,
-          // Diğer alanları buraya ekleyin
-        },
-      ]);
+
       setIsAddModalOpen(false);
+      // Formu sıfırla
+      form.resetFields();
+      // Başarı durumunda Modal içerisinde başarılı mesajı göster
+      message.success("Yeni müşteri eklendi.");
     } catch (error) {
-      // Hata durumunda mesaj göster
       console.error("Error:", error);
-      message.error(error.message || "Bir hata oluştu.");
+      // Hata durumunda Modal içerisinde hata mesajını göster
+      message.error("Müşteri kaydedilemedi!");
     }
   };
-  
 
   return (
     <Modal
@@ -55,7 +42,6 @@ const Add = ({
       footer={null}
     >
       <Form layout="vertical" onFinish={onFinish} form={form}>
-
         <Form.Item
           name="name"
           label="İsim"
@@ -63,7 +49,6 @@ const Add = ({
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           name="phone"
           label="Telefon"
@@ -71,11 +56,10 @@ const Add = ({
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           name="address"
           label="Adres"
-          rules={[{ required: true, message: "Telefon Alanı Boş Geçilemez!" }]}
+          rules={[{ required: true, message: "Adres Alanı Boş Geçilemez!" }]}
         >
           <Input />
         </Form.Item>
